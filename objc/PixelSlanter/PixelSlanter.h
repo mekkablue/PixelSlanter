@@ -8,18 +8,20 @@
 #  import <GlyphsCore/GSComponent.h>
 #  import <GlyphsCore/GSFontMaster.h>
 #else
-//  Minimal stubs for compiling without GlyphsCore SDK headers installed.
+//  Minimal stubs for compiling without GlyphsCore SDK headers.
 //  The real implementations are provided by the Glyphs runtime at load time.
 
 @class GSComponent;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface GSFontMaster : NSObject
-- (CGFloat)slantHeightForLayer:(id)layer;
+- (CGFloat)slantHeightForLayer:(nullable id)layer;
 @end
 
 @interface GSLayer : NSObject
-@property (nonatomic, readonly) GSFontMaster               *master;
-@property (nonatomic, readonly) NSArray<GSComponent *>     *components;
+@property (nonatomic, readonly) GSFontMaster           *master;
+@property (nonatomic, readonly) NSArray<GSComponent *> *components;
 @end
 
 @interface GSComponent : NSObject
@@ -31,11 +33,13 @@
 - (NSUInteger)interfaceVersion;
 - (NSString *)title;
 - (BOOL)setup;
-- (NSView *)theView;
+- (nullable NSView *)theView;
 - (void)processLayer:(GSLayer *)layer options:(NSDictionary<NSString *, id> *)options;
 @optional
 - (NSString *)actionName;
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif  // __has_include
 
@@ -45,8 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Both outlets are connected in Dialog.xib.
 // angleField has custom class GSSteppingTextField set in the XIB.
-@property (weak) IBOutlet NSView      *theView;
-@property (weak) IBOutlet NSTextField *angleField;
+@property (weak, nullable) IBOutlet NSView      *theView;
+@property (weak, nullable) IBOutlet NSTextField *angleField;
 
 @end
 

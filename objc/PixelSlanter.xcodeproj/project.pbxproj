@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		ADB100000000000000002001 /* PixelSlanter.m in Sources */ = {isa = PBXBuildFile; fileRef = ADB100000000000000001002 /* PixelSlanter.m */; };
 		ADB100000000000000002002 /* Dialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADB100000000000000001004 /* Dialog.xib */; };
-		ADB100000000000000002003 /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB100000000000000001005 /* GlyphsCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +25,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADB100000000000000002003 /* GlyphsCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +77,7 @@
 				ADB100000000000000003001 /* Sources */,
 				ADB100000000000000003002 /* Resources */,
 				ADB100000000000000003003 /* Frameworks */,
+				ADB100000000000000003004 /* Copy bundle to repository root */,
 			);
 			buildRules = ();
 			dependencies = ();
@@ -129,6 +128,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		ADB100000000000000003004 /* Copy bundle to repository root */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = ();
+			inputFileListPaths = ();
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(WRAPPER_NAME)",
+			);
+			name = "Copy bundle to repository root";
+			outputFileListPaths = ();
+			outputPaths = ();
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nrsync -a --delete \"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/\" \"$SRCROOT/../$WRAPPER_NAME/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		ADB100000000000000003001 /* Sources */ = {
@@ -240,18 +258,15 @@
 		ADB100000000000000005003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/..";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(HOME)/Library/Frameworks",
-					"/Applications/Glyphs 3.app/Contents/Frameworks",
-				);
 				INFOPLIST_FILE = PixelSlanter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
 					"@loader_path/../../../../Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-undefined",
+					"dynamic_lookup",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mekkablue.PixelSlanter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -262,18 +277,15 @@
 		ADB100000000000000005004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/..";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(HOME)/Library/Frameworks",
-					"/Applications/Glyphs 3.app/Contents/Frameworks",
-				);
 				INFOPLIST_FILE = PixelSlanter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
 					"@loader_path/../../../../Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-undefined",
+					"dynamic_lookup",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mekkablue.PixelSlanter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
