@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)title;
 - (BOOL)setup;
 - (nullable NSView *)theView;
-- (void)processLayer:(GSLayer *)layer options:(NSDictionary<NSString *, id> *)options;
+- (void)processLayer:(GSLayer *)layer withArguments:(NSDictionary<NSString *, id> *)arguments;
 @optional
 - (NSString *)actionName;
 @end
@@ -47,11 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PixelSlanter : NSObject <GlyphsFilterProtocol>
 
-// theView is the top-level object from the XIB — must be strong so it
-// survives after loadNibNamed:owner:topLevelObjects:nil returns.
+// theView is the top-level XIB object — strong so it survives after NIB load.
 @property (strong, nullable) IBOutlet NSView      *theView;
-
-// angleField is a subview retained by the view hierarchy — weak is fine.
+// angleField is a subview retained by the view hierarchy.
 @property (weak,   nullable) IBOutlet NSTextField *angleField;
 
 @end

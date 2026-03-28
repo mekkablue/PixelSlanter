@@ -3,7 +3,7 @@
 #import "PixelSlanter.h"
 #import <math.h>
 
-static NSString * const kAngleKey = @"com.mekkablue.PixelSlanter.angle";
+static NSString * const kAngleKey     = @"com.mekkablue.PixelSlanter.angle";
 static double     const kAngleDefault = 8.0;
 
 @implementation PixelSlanter
@@ -29,13 +29,13 @@ static double     const kAngleDefault = 8.0;
 }
 
 // Called for every layer the filter is applied to.
-- (void)processLayer:(GSLayer *)layer options:(NSDictionary<NSString *, id> *)options {
+- (void)processLayer:(GSLayer *)layer withArguments:(NSDictionary<NSString *, id> *)arguments {
 	double angle;
-	if (options[kAngleKey]) {
-		// Invoked via Custom Parameter — read from parameter dict.
-		angle = [options[kAngleKey] doubleValue];
+	if (arguments[@"angle"]) {
+		// Invoked via Custom Parameter — use the value from the parameter dict.
+		angle = [arguments[@"angle"] doubleValue];
 	} else {
-		// Invoked from the dialog — read from the field and persist.
+		// Invoked from the dialog — read from the UI field and persist.
 		angle = self.angleField.doubleValue;
 		[[NSUserDefaults standardUserDefaults] setDouble:angle forKey:kAngleKey];
 	}
@@ -44,8 +44,8 @@ static double     const kAngleDefault = 8.0;
 		return;
 	}
 
-	double    tanAngle = tan(angle * M_PI / 180.0);
-	CGFloat   pivot    = [layer.master slantHeightForLayer:layer];
+	double  tanAngle = tan(angle * M_PI / 180.0);
+	CGFloat pivot    = [layer.master slantHeightForLayer:layer];
 
 	for (GSComponent *component in layer.components) {
 		NSPoint pos = component.position;
