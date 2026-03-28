@@ -10,6 +10,8 @@
 #else
 //  Minimal stubs for compiling without GlyphsCore SDK headers.
 //  The real implementations are provided by the Glyphs runtime at load time.
+//  We do NOT stub @protocol GlyphsFilterProtocol to avoid a runtime protocol
+//  conflict: Glyphs uses respondsToSelector: for method discovery, not conformsToProtocol:.
 
 @class GSComponent;
 
@@ -28,28 +30,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSPoint position;
 @end
 
-@protocol GlyphsFilterProtocol <NSObject>
-@required
-- (NSUInteger)interfaceVersion;  // Return 2 for the v2 API
-- (NSString *)title;             // Menu item name
-- (nullable NSError *)setup;     // Called once at load; return nil for success
-- (BOOL)runFilterWithLayer:(GSLayer *)layer
-                     error:(out NSError *__autoreleasing *)error;  // Main filter entry point
-@optional
-- (NSString *)actionName;        // Label for the Apply button
-- (NSString *)keyEquivalent;     // Keyboard shortcut (or nil)
-- (nullable NSView *)view;       // Dialog/sheet view (nil = no UI)
-- (void)processLayer:(GSLayer *)layer
-       withArguments:(NSDictionary<NSString *, id> *)arguments;  // Called from Custom Parameter
-@end
-
 NS_ASSUME_NONNULL_END
 
 #endif  // __has_include
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PixelSlanter : NSObject <GlyphsFilterProtocol>
+// Declare as plain NSObject — no formal protocol conformance.
+// Glyphs discovers filter methods via respondsToSelector:, not conformsToProtocol:.
+// Declaring <GlyphsFilterProtocol> would embed a stub protocol object that conflicts
+// with the real one in GlyphsCore, causing "Problem with Plugin."
+@interface PixelSlanter : NSObject
 
 // theView is the top-level XIB object — strong so it survives after NIB load.
 @property (strong, nullable) IBOutlet NSView      *theView;
