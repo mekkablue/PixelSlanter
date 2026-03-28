@@ -47,10 +47,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PixelSlanter : NSObject <GlyphsFilterProtocol>
 
-// Both outlets are connected in Dialog.xib.
-// angleField has custom class GSSteppingTextField set in the XIB.
-@property (weak, nullable) IBOutlet NSView      *theView;
-@property (weak, nullable) IBOutlet NSTextField *angleField;
+// theView is the top-level object from the XIB — must be strong so it
+// survives after loadNibNamed:owner:topLevelObjects:nil returns.
+@property (strong, nullable) IBOutlet NSView      *theView;
+
+// angleField is a subview retained by the view hierarchy — weak is fine.
+@property (weak,   nullable) IBOutlet NSTextField *angleField;
 
 @end
 
