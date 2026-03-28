@@ -30,13 +30,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol GlyphsFilterProtocol <NSObject>
 @required
-- (NSUInteger)interfaceVersion;
-- (NSString *)title;
-- (BOOL)setup;
-- (nullable NSView *)theView;
-- (void)processLayer:(GSLayer *)layer withArguments:(NSDictionary<NSString *, id> *)arguments;
+- (NSUInteger)interfaceVersion;  // Return 2 for the v2 API
+- (NSString *)title;             // Menu item name
+- (nullable NSError *)setup;     // Called once at load; return nil for success
+- (BOOL)runFilterWithLayer:(GSLayer *)layer
+                     error:(out NSError *__autoreleasing *)error;  // Main filter entry point
 @optional
-- (NSString *)actionName;
+- (NSString *)actionName;        // Label for the Apply button
+- (NSString *)keyEquivalent;     // Keyboard shortcut (or nil)
+- (nullable NSView *)view;       // Dialog/sheet view (nil = no UI)
+- (void)processLayer:(GSLayer *)layer
+       withArguments:(NSDictionary<NSString *, id> *)arguments;  // Called from Custom Parameter
 @end
 
 NS_ASSUME_NONNULL_END
