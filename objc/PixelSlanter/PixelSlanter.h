@@ -4,6 +4,8 @@
 #import <GlyphsCore/GSFilterPlugin.h>
 #import <GlyphsCore/GSLayer.h>
 #import <GlyphsCore/GSComponent.h>
+#import <GlyphsCore/GSDialogController.h>
+#import <GlyphsCore/GSFont.h>
 #import <GlyphsCore/GSFontMaster.h>
 #import <GlyphsCore/GSProxyShapes.h>
 
@@ -16,10 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 // build time.
 @interface PixelSlanter : GSFilterPlugin
 
-// Top-level view loaded from Dialog.xib (connected as IBOutlet "theView").
-@property (strong, nullable) IBOutlet NSView      *theView;
-// Angle input field inside the dialog view.
-@property (weak,   nullable) IBOutlet NSTextField *angleField;
+// Angle input field inside the dialog view (connected in Dialog.xib).
+// The top-level view connects to the inherited 'view' property from GSFilterPlugin.
+@property (weak, nullable) IBOutlet NSTextField *angleField;
 
 @end
 

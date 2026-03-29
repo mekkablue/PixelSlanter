@@ -1,51 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="NO">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PixelSlanter">
+        <customObject id="-2" userLabel="File's Owner" customClass="PixelSlanter">
             <connections>
                 <outlet property="angleField" destination="3" id="10"/>
-                <outlet property="theView"    destination="1" id="11"/>
+                <outlet property="view" destination="1" id="11"/>
             </connections>
-        </placeholder>
-        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="NSResponder"/>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
         <view id="1" userLabel="Dialog">
-            <rect key="frame" x="0.0" y="0.0" width="190" height="40"/>
+            <rect key="frame" x="0.0" y="0.0" width="251" height="48"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <!-- "Angle:" label -->
-                <textField editable="NO" selectable="NO" bordered="NO" drawsBackground="NO" id="2">
-                    <rect key="frame" x="10" y="12" width="50" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Angle:" id="20">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor"       name="labelColor"   catalog="System" colorSpace="catalog"/>
+                <textField focusRingType="none" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2">
+                    <rect key="frame" x="18" y="16" width="96" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="92" id="9S6-wQ-OBT"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Angle:" id="20">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <!-- Angle stepping field (custom class GSSteppingTextField) -->
-                <textField customClass="GSSteppingTextField" id="3">
-                    <rect key="frame" x="65" y="8" width="70" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="right" title="8" id="30">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor"       name="controlTextColor"    catalog="System" colorSpace="catalog"/>
+                <textField focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="4">
+                    <rect key="frame" x="229" y="15" width="11" height="18"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="°" id="40">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="3" customClass="GSSteppingTextField">
+                    <rect key="frame" x="120" y="13" width="103" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="8" drawsBackground="YES" id="30">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
-                </textField>
-                <!-- "°" suffix label -->
-                <textField editable="NO" selectable="NO" bordered="NO" drawsBackground="NO" id="4">
-                    <rect key="frame" x="140" y="12" width="20" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="°" id="40">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor"       name="labelColor"   catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
+                    <connections>
+                        <action selector="setAngle:" target="-2" id="12"/>
+                    </connections>
                 </textField>
             </subviews>
+            <constraints>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="8" symbolic="YES" id="8yl-S2-Ca5"/>
+                <constraint firstItem="3" firstAttribute="centerY" secondItem="4" secondAttribute="centerY" id="9es-Wn-Ff1"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="13" id="IAC-et-0cj"/>
+                <constraint firstItem="3" firstAttribute="baseline" secondItem="4" secondAttribute="firstBaseline" id="REr-3s-ahu"/>
+                <constraint firstItem="2" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="Sob-xv-lNF"/>
+                <constraint firstItem="3" firstAttribute="leading" secondItem="2" secondAttribute="trailing" constant="8" symbolic="YES" id="aom-yq-3KY"/>
+                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="13" id="gge-tz-blW"/>
+                <constraint firstItem="3" firstAttribute="baseline" secondItem="2" secondAttribute="firstBaseline" id="qqs-dm-b1i"/>
+                <constraint firstItem="2" firstAttribute="baseline" secondItem="4" secondAttribute="baseline" id="skg-08-b7b"/>
+                <constraint firstItem="2" firstAttribute="top" secondItem="1" secondAttribute="top" constant="15" id="ySz-CW-8T9"/>
+            </constraints>
+            <point key="canvasLocation" x="158.5" y="158"/>
         </view>
     </objects>
 </document>
