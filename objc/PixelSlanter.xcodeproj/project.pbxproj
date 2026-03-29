@@ -58,7 +58,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ADB1000000000000000B00FF /* MainGroup */ = {
+		ADB1000000000000000B00FF = {
 			isa = PBXGroup;
 			children = (
 				ADB1000000000000000B0000 /* PixelSlanter */,
@@ -79,8 +79,10 @@
 				ADB100000000000000003003 /* Frameworks */,
 				ADB100000000000000003004 /* Install into Glyphs 3 Plugins */,
 			);
-			buildRules = ();
-			dependencies = ();
+			buildRules = (
+			);
+			dependencies = (
+			);
 			name = PixelSlanter;
 			productName = PixelSlanter;
 			productReference = ADB100000000000000001006 /* PixelSlanter.glyphsFilter */;
@@ -108,7 +110,7 @@
 				en,
 				Base,
 			);
-			mainGroup = ADB1000000000000000B00FF /* MainGroup */;
+			mainGroup = ADB1000000000000000B00FF;
 			productRefGroup = ADB1000000000000000B0002 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -134,12 +136,17 @@
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
-			files = ();
-			inputFileListPaths = ();
-			inputPaths = ();
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
 			name = "Install into Glyphs 3 Plugins";
-			outputFileListPaths = ();
-			outputPaths = ();
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\nDEST=\"$HOME/Library/Application Support/Glyphs 3/Plugins/$WRAPPER_NAME\"\nrsync -a --delete \"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/\" \"$DEST/\"\necho \"Installed $WRAPPER_NAME\"\n";
@@ -260,6 +267,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/..";
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Glyphs 3.app/Contents/Frameworks\"";
 				INFOPLIST_FILE = PixelSlanter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -268,9 +276,9 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-undefined",
-					"dynamic_lookup",
+					dynamic_lookup,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mekkablue.PixelSlanter";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.PixelSlanter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = glyphsFilter;
 			};
@@ -281,6 +289,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/..";
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Glyphs 3.app/Contents/Frameworks\"";
 				INFOPLIST_FILE = PixelSlanter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -289,9 +298,9 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-undefined",
-					"dynamic_lookup",
+					dynamic_lookup,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mekkablue.PixelSlanter";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mekkablue.PixelSlanter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = glyphsFilter;
 			};
@@ -319,7 +328,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
 	};
 	rootObject = ADB1000000000000000A0001 /* Project object */;
 }

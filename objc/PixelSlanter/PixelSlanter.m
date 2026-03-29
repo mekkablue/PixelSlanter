@@ -12,7 +12,6 @@ static double     const kAngleDefault = 8.0;
 - (NSUInteger)interfaceVersion {
 	return 2;
 }
-
 - (NSString *)title {
 	return @"Pixel Slanter";
 }
@@ -22,8 +21,13 @@ static double     const kAngleDefault = 8.0;
 }
 
 // Returns the dialog view shown in the Filter sheet.
-- (nullable NSView *)view {
+- (NSView *)view {
 	return self.theView;
+}
+
+// No keyboard shortcut.
+- (NSString *)keyEquivalent {
+	return @"";
 }
 
 // Called once after the bundle is loaded.
@@ -39,11 +43,12 @@ static double     const kAngleDefault = 8.0;
 - (BOOL)runFilterWithLayer:(GSLayer *)layer error:(out NSError *__autoreleasing *)error {
 	double angle = self.angleField ? self.angleField.doubleValue : kAngleDefault;
 	[[NSUserDefaults standardUserDefaults] setDouble:angle forKey:kAngleKey];
-	if (angle == 0.0 || layer.components.count == 0) {
+	if (angle == 0.0 || layer.countOfComponents == 0) {
 		return YES;
 	}
-	double  tanAngle = tan(angle * M_PI / 180.0);
-	CGFloat pivot    = [layer.master slantHeightForLayer:layer];
+	double          tanAngle = tan(angle * M_PI / 180.0);
+	GSFontMaster   *master   = [layer associatedFontMaster];
+	CGFloat         pivot    = master ? [master slantHeightForLayer:layer] : 0.0;
 	for (GSComponent *component in layer.components) {
 		NSPoint pos = component.position;
 		pos.x = round(pos.x + (pos.y - pivot) * tanAngle);
@@ -61,11 +66,12 @@ static double     const kAngleDefault = 8.0;
 		angle = self.angleField ? self.angleField.doubleValue : kAngleDefault;
 		[[NSUserDefaults standardUserDefaults] setDouble:angle forKey:kAngleKey];
 	}
-	if (angle == 0.0 || layer.components.count == 0) {
+	if (angle == 0.0 || layer.countOfComponents == 0) {
 		return;
 	}
-	double  tanAngle = tan(angle * M_PI / 180.0);
-	CGFloat pivot    = [layer.master slantHeightForLayer:layer];
+	double          tanAngle = tan(angle * M_PI / 180.0);
+	GSFontMaster   *master   = [layer associatedFontMaster];
+	CGFloat         pivot    = master ? [master slantHeightForLayer:layer] : 0.0;
 	for (GSComponent *component in layer.components) {
 		NSPoint pos = component.position;
 		pos.x = round(pos.x + (pos.y - pivot) * tanAngle);
