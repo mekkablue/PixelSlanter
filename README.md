@@ -1,12 +1,12 @@
 # PixelSlanter
 
-This is a filter plugin for the [Glyphs font editor](http://glyphsapp.com/). It pseudo-slants pixel fonts by shifting the components of each glyph into slanted positions, simulating an italic angle without distorting the individual pixel shapes. After installation, it will add the menu item _Filter > Pixel Slanter_.
+This is a filter for the [Glyphs font editor](https://www.glyphsapp.com/). It pseudo-slants pixel fonts by shifting the components of each glyph into slanted positions, simulating an italic angle without distorting the individual pixel shapes. After installation, it will add the menu item _Filter > Pixel Slanter_.
 
 ![Pixel Slanter pseudo-slanting a pixel font.](PixelSlanter.png "Pixel Slanter")
 
 ### Installation
 
-1. In [Glyphs](http://glyphsapp.com/), open *Window > Plugin Manager.*
+1. In [Glyphs](https://www.glyphsapp.com/), open *Window > Plugin Manager.*
 2. Find *Pixel Slanter* and click the *Install* button next to it.
 3. Restart Glyphs.
 
@@ -30,7 +30,7 @@ The plugin needs Glyphs 3.0 or higher, running on a recent version of macOS.
 
 ### License
 
-Copyright 2025 Rainer Erich Scheichelbauer (@mekkablue).
+Copyright 2026 Rainer Erich Scheichelbauer (@mekkablue).
 Based on sample code by Georg Seifert (@schriftgestalt) and Florian Pircher (@florianpircher).
 
 Licensed under the Apache License, Version 2.0 (the "License");
