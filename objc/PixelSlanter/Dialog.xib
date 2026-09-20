@@ -9,7 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PixelSlanter">
             <connections>
                 <outlet property="angleField" destination="3" id="10"/>
-                <outlet property="view" destination="1" id="11"/>
+                <outlet property="_view" destination="1" id="11"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>

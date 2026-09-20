@@ -1,36 +1,34 @@
 // PixelSlanter.m
 
 #import "PixelSlanter.h"
+#import <GlyphsApp/GSCallbackHandler.h>
 #import <math.h>
 
 static NSString * const kAngleKey     = @"com.mekkablue.PixelSlanter.angle";
 static double     const kAngleDefault = 8.0;
 
-@implementation PixelSlanter
+@implementation PixelSlanter {
+	// In Glyphs 3, GSFilterPlugin owned the _view ivar. In Glyphs 4 the
+	// subclass owns it and loads the dialog NIB lazily from the -view getter,
+	// so the ivar is declared here and Dialog.xib connects its top-level view
+	// to the _view outlet.
+	NSView *_view;
+}
 
-- (instancetype)init {
-	NSLog(@"[PixelSlanter] init");
-	self = [super init];
-	if (self) {
-		// Load the dialog NIB immediately.  We use plain NSTextField (no
-		// custom GlyphsCore classes), so loading here is safe.  Glyphs
-		// reads _view directly from the ivar rather than through a getter,
-		// so it must be set before the dialog is constructed.
-		NSLog(@"[PixelSlanter] loading Dialog NIB…");
-		BOOL ok = [[NSBundle bundleForClass:[self class]] loadNibNamed:@"Dialog" owner:self topLevelObjects:nil];
-		NSLog(@"[PixelSlanter] NIB loaded=%d  _view=%@  angleField=%@", ok, _view, self.angleField);
+// Dialog view — loads the NIB the first time Glyphs asks for it.
+- (NSView *)view {
+	if (!_view) {
+		[[NSBundle bundleForClass:[self class]] loadNibNamed:@"Dialog" owner:self topLevelObjects:nil];
 	}
-	return self;
+	return _view;
 }
 
 // v1 API — return 1 to match all working Glyphs filter plugins.
 - (NSUInteger)interfaceVersion {
-	NSLog(@"[PixelSlanter] interfaceVersion");
 	return 1;
 }
 
 - (NSString *)title {
-	NSLog(@"[PixelSlanter] title");
 	return @"Pixel Slanter";
 }
 
@@ -44,7 +42,6 @@ static double     const kAngleDefault = 8.0;
 
 // Called before each filter run to populate the dialog with saved values.
 - (nullable NSError *)setup {
-	NSLog(@"[PixelSlanter] setup  angleField=%@", self.angleField);
 	[super setup];
 	double saved = [[NSUserDefaults standardUserDefaults] doubleForKey:kAngleKey];
 	[self.angleField setDoubleValue:(saved != 0.0 ? saved : kAngleDefault)];
@@ -55,21 +52,41 @@ static double     const kAngleDefault = 8.0;
 
 // IBAction — called by the angle field when its value changes; triggers live preview.
 - (IBAction)setAngle:(id)sender {
-	NSLog(@"[PixelSlanter] setAngle: %@", sender);
 	[self process:nil];
 }
 
 // Core processing for the live-preview loop and dialog OK.
 // _shadowLayers / _layers are set up by Glyphs before process: is called.
 - (void)process:(id)sender {
-	NSLog(@"[PixelSlanter] process:  shadowLayers=%lu", (unsigned long)_shadowLayers.count);
 	double angle = self.angleField ? self.angleField.doubleValue : kAngleDefault;
 	[[NSUserDefaults standardUserDefaults] setDouble:angle forKey:kAngleKey];
 	for (NSUInteger k = 0; k < _shadowLayers.count; k++) {
 		GSLayer *shadowLayer = _shadowLayers[k];
 		GSLayer *layer       = _layers[k];
-		[layer getCopyOfContentFromLayer:shadowLayer doSelection:_checkSelection];
+
+		// Restore the untouched shapes from the shadow layer, then re-apply the
+		// filter, so the preview is non-destructive. This follows the Glyphs 4
+		// filter template instead of -getCopyOfContentFromLayer:doSelection:.
+		layer.shapes = [[NSMutableArray alloc] initWithArray:shadowLayer.shapes copyItems:YES];
+		layer.selection = [NSMutableOrderedSet new];
+		if (_checkSelection && shadowLayer.selection.count > 0) {
+			for (NSUInteger i = 0; i < shadowLayer.shapes.count; i++) {
+				GSPath *shadowPath = (GSPath *)[shadowLayer objectInShapesAtIndex:i];
+				if (![shadowPath isKindOfClass:[GSPath class]]) {
+					continue;
+				}
+				GSPath *layerPath = (GSPath *)[layer objectInShapesAtIndex:i];
+				for (NSUInteger j = 0; j < shadowPath.nodes.count; j++) {
+					GSNode *shadowNode = [shadowPath nodeAtIndex:j];
+					if ([shadowLayer.selection containsObject:shadowNode]) {
+						[layer addSelection:[layerPath nodeAtIndex:j]];
+					}
+				}
+			}
+		}
+
 		[self _slantComponents:layer angle:angle];
+		[layer clearSelection];
 	}
 	// If the font uses a coarse grid (e.g. pixel size > 1), migrate that value into
 	// gridSubDivision so the effective grid becomes 1 unit.  This lets the slanted
@@ -85,7 +102,6 @@ static double     const kAngleDefault = 8.0;
 // Called when the filter runs via a Custom Parameter (e.g., on export).
 // arguments[0] is the filter name; arguments[1] is the angle value.
 - (void)processLayer:(GSLayer *)layer withArguments:(NSArray *)arguments {
-	NSLog(@"[PixelSlanter] processLayer:withArguments: %@", arguments);
 	double angle = arguments.count > 1 ? [arguments[1] doubleValue] : kAngleDefault;
 	[self _slantComponents:layer angle:angle];
 }

@@ -2,14 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>plugin</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.mekkablue.PixelSlanter</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>PixelSlanter</string>
-	<key>CFBundleVersion</key>
+	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright Rainer Erich Scheichelbauer, 2026</string>
 	<key>NSPrincipalClass</key>
 	<string>PixelSlanter</string>
+	<key>PyMainFileNames</key>
+	<array>
+		<string>plugin.py</string>
+	</array>
 	<key>com.schriftgestaltung.pluginMinVersion</key>
 	<string>1240</string>
 </dict>

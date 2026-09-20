@@ -26,7 +26,9 @@ If you do not feel like typing it, you can click the _Copy Parameter_ button, wh
 
 ### Requirements
 
-The plugin needs Glyphs 3.0 or higher, running on a recent version of macOS.
+The plugin needs Glyphs 4 or higher, running on macOS 12 or later. It is built
+against the `GlyphsCore` and `GlyphsApp` frameworks inside `Glyphs 4.app`,
+because Glyphs 4 moved `GSFilterPlugin` from `GlyphsCore` into `GlyphsApp`.
 
 ### License
 
